@@ -1,5 +1,5 @@
 const express = require("express");
-const epath = require("path");
+const path = require("path");
 const morgan = require("morgan");
 const nunjucks = require("nunjucks");
 
@@ -22,8 +22,7 @@ sequelize
   });
 
 app.use(morgan("dev"));
-// app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(epath.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -36,6 +35,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+  res.status(err.status || 500);
   res.render("error");
 });
 
