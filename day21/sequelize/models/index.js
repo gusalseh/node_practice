@@ -49,13 +49,14 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = User;
-db.Comment = Comment;
+// 하단 주석코드는 중복된 내용이므로 생략 가능
+// db.User = User;
+// db.Comment = Comment;
 
-User.initiate(sequelize);
-Comment.initiate(sequelize);
+// User.initiate(sequelize);
+// Comment.initiate(sequelize);
 
-User.associate(db);
-Comment.associate(db);
+// User.associate(db);
+// Comment.associate(db);
 
 module.exports = db;
