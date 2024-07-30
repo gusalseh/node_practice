@@ -40,12 +40,7 @@ class User extends Sequelize.Model {
     );
   }
 
-  static associate(db) {
-    // users 모델과 comments 모델 간의 관계를 정의
-    // 1:N 관계 (사용자 한 명이 여러 개의 댓글 작성)
-    // 시퀄라이즈에서는 1:N 관계를 hasMany로 표현 (사용자.hasMany(댓글))
-    db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" });
-  }
+  static associate(db) {}
 }
 
 module.exports = User;
