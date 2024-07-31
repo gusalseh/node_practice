@@ -80,12 +80,16 @@ app.listen(app.get("port"), async () => {
   // let data = await User.findOne({});
   // console.log(data.name);
 
-  let data = await User.findOne({
-    include: [
-      {
-        model: Comment,
-      },
-    ],
-  });
-  console.log(data.Comments);
+  // let data = await User.findOne({
+  //   include: [
+  //     {
+  //       model: Comment,
+  //     },
+  //   ],
+  // });
+  // console.log(data.Comments);
+
+  // raw 쿼리
+  const [result, metadata] = await sequelize.query("SELECT * from comments");
+  console.log(result);
 });
