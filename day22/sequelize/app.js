@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const nunjucks = require("nunjucks");
 
 const { sequelize } = require("./models");
+const { User } = require("./models");
 
 const app = express();
 app.set("port", process.env.PORT || 3001);
