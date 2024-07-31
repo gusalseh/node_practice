@@ -5,6 +5,7 @@ const nunjucks = require("nunjucks");
 
 const { sequelize } = require("./models");
 const { User } = require("./models");
+const { Comment } = require("./models");
 const { Op } = require("sequelize");
 
 const app = express();
@@ -76,5 +77,15 @@ app.listen(app.get("port"), async () => {
   //   where: { id: 2 },
   // });
 
-  console.log(data);
+  // let data = await User.findOne({});
+  // console.log(data.name);
+
+  let data = await User.findOne({
+    include: [
+      {
+        model: Comment,
+      },
+    ],
+  });
+  console.log(data.Comments);
 });
