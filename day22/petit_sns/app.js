@@ -4,9 +4,6 @@ const morgan = require("morgan");
 const nunjucks = require("nunjucks");
 
 const { sequelize } = require("./models");
-const { User } = require("./models");
-const { Comment } = require("./models");
-const { Op } = require("sequelize");
 
 const app = express();
 app.set("port", process.env.PORT || 3001);
@@ -44,52 +41,4 @@ app.use((err, req, res, next) => {
 
 app.listen(app.get("port"), async () => {
   console.log(app.get("port"), "번 포트에서 대기 중");
-
-  // 읽기
-  // let data = await User.findAll({
-  //   attribute: ["name", "married"],
-  //   where: {
-  //     married: 1,
-  //     age: { [Op.gt]: 30 },
-  //   },
-  // });
-
-  // 읽기
-  // let data = await User.findAll({
-  //   attributes: ["id", "name"],
-  //   order: [["age", "DESC"]],
-  //   limit: 1,
-  //   offset: 1,
-  // });
-
-  // 수정
-  // let data = await User.update(
-  //   {
-  //     comment: "update로 수정한 내용",
-  //   },
-  //   {
-  //     where: { id: 2 },
-  //   }
-  // );
-
-  // 삭제
-  // let data = await User.destroy({
-  //   where: { id: 2 },
-  // });
-
-  // let data = await User.findOne({});
-  // console.log(data.name);
-
-  // let data = await User.findOne({
-  //   include: [
-  //     {
-  //       model: Comment,
-  //     },
-  //   ],
-  // });
-  // console.log(data.Comments);
-
-  // raw 쿼리
-  const [result, metadata] = await sequelize.query("SELECT * from comments");
-  console.log(result);
 });
