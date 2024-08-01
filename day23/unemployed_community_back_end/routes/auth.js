@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { renderJoin } = require("../controllers/auth");
+const { join } = require("../controllers/auth");
+const { isLoggedIn, isNotLoggedIn } = require("../middlewares");
 
-router.get("/join", renderJoin);
+router.get("/join", isNotLoggedIn, join);
+
+router.get("/login", isNotLoggedIn, login);
+
+router.get("/logout", isLoggedIn, logout);
 
 module.exports = router;

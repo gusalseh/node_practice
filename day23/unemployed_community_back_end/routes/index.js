@@ -12,7 +12,7 @@ router.use("/", page);
 router.use("/community", community);
 // localhost:8001/auth/join
 router.use("/auth", auth);
-// localhost:8001/profile/mypage
+// localhost:8001/mypage/profile
 router.use("/mypage", mypage);
 
 module.exports = router;
