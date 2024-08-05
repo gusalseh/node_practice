@@ -11,16 +11,11 @@ class User extends Sequelize.Model {
         },
         nick: {
           type: Sequelize.STRING(15),
-          // allowNull: false,
+          allowNull: false,
         },
         password: {
           type: Sequelize.STRING(100),
           allowNull: true,
-        },
-        name: {
-          type: Sequelize.STRING(20),
-          // allowNull: false,
-          unique: true,
         },
         provider: {
           type: Sequelize.ENUM("local", "kakao"),
@@ -30,23 +25,23 @@ class User extends Sequelize.Model {
           type: Sequelize.STRING(255),
         },
 
-        name: {
-          type: Sequelize.STRING(20),
-          // allowNull: false,
-          unique: true,
-        },
-        age: {
-          type: Sequelize.INTEGER.UNSIGNED,
-          // allowNull: false,
-        },
-        married: {
-          type: Sequelize.BOOLEAN,
-          // allowNull: false,
-        },
-        comment: {
-          type: Sequelize.TEXT,
-          allowNul: false,
-        },
+        // name: {
+        //   type: Sequelize.STRING(20),
+        //   // allowNull: false,
+        //   unique: true,
+        // },
+        // age: {
+        //   type: Sequelize.INTEGER.UNSIGNED,
+        //   // allowNull: false,
+        // },
+        // married: {
+        //   type: Sequelize.BOOLEAN,
+        //   // allowNull: false,
+        // },
+        // comment: {
+        //   type: Sequelize.TEXT,
+        //   allowNul: false,
+        // },
       },
       {
         sequelize,
@@ -60,7 +55,19 @@ class User extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" });
+    // db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" });
+
+    db.User.hasMany(db.Post);
+    db.User.belongsToMany(db.User, {
+      foreignKey: "followingId",
+      as: "Followers",
+      through: "Follow",
+    });
+    db.User.belongsToMany(db.User, {
+      foreignKey: "followerId",
+      as: "Followings",
+      through: "Follow",
+    });
   }
 }
 
