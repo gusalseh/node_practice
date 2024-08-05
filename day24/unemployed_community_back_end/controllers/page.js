@@ -19,6 +19,10 @@ exports.renderMain = async (req, res, next) => {
   }
 };
 
+exports.renderJoin = (req, res) => {
+  res.render("join", { title: "회원가입 - NodeBird" });
+};
+
 exports.renderHashtag = async (req, res, next) => {
   const query = req.query.hashtag;
   if (!query) {
