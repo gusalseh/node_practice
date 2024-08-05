@@ -23,11 +23,17 @@ class User extends Sequelize.Model {
           unique: true,
         },
         provider: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.ENUM("local", "kakao"),
           allowNull: false,
         },
         snsId: {
           type: Sequelize.STRING(255),
+        },
+
+        name: {
+          type: Sequelize.STRING(20),
+          // allowNull: false,
+          unique: true,
         },
         age: {
           type: Sequelize.INTEGER.UNSIGNED,
