@@ -49,16 +49,47 @@
       {% endif %}
     </div>
     {% endfor %}
+    <a href="/?currentPage=1"> <span> << </span> </a>&nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% if currentPage != 1 %}
+    <a href="/?currentPage={{currentPage-1}}"> <span> < </span> </a>&nbsp;&nbsp;
+    {% endif %}
+    <!-- prettier-ignore -->
+    {% if currentPage == 1 %}
+    <span> < </span> &nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% endif %}
 
-    <a href="/?currentPage=1"> <span><<</span> </a>&nbsp;&nbsp; {% if
-    currentPage != 1 %}
-    <a href="/?currentPage={{currentPage-1}}"> <span><</span> </a>&nbsp;&nbsp;
-    {% endif %} {% if currentPage == 1 %} <span><</span> &nbsp;&nbsp; {% endif
-    %} {% for size in range(totalSize/pageSize) %}
-    <span>{{loop.index}}</span>&nbsp;&nbsp; {% endfor %}
+    <!-- prettier-ignore -->
+    {% if (pageOffset//10) == (maxPage//10)  %}
+    <!-- prettier-ignore -->
+    {% for size in range(pageOffset, maxPage+1) %}
+    <span>{{size}}</span>&nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% endfor %}
+    <!-- prettier-ignore -->
+    {% endif %}
 
-    <span>></span>&nbsp;&nbsp;
-    <span>>></span>
+    <!-- prettier-ignore -->
+    {% if (pageOffset//10) != (maxPage//10)  %}
+    {% for size in range(pageOffset, pageOffset+10) %}
+    <span>{{size}}</span>&nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% endfor %}
+    <!-- prettier-ignore -->
+    {% endif %}
+
+    <!-- prettier-ignore -->
+    {% if currentPage >= (totalSize//5) + 1 %}
+    <span> > </span> &nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% endif %}
+    {% if currentPage < (totalSize//5) + 1 %}
+    <a href="/?currentPage={{currentPage+1}}"> <span> > </span></a>&nbsp;&nbsp;
+    <!-- prettier-ignore -->
+    {% endif %}
+
+    <a href="/?currentPage={{totalSize//5+1}}"> <span> >> </span></a>
   </div>
 </div>
 {% endblock %} {% block script %}

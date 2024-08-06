@@ -10,35 +10,9 @@ exports.renderJoin = (req, res) => {
 
 exports.renderMain = async (req, res, next) => {
   // pagination 구현부
-  let pageSize = 5;
-
-  // http://localhost:8001/?currentPage=1의 역할
-  let currentPage = req.params.currentPage; // 추후 프론트단에서 구체화
 
   // 데이터베이스 쿼리해서 계산 필요
   let totalSize = 0;
-
-  // try {
-  //   const posts = await Post.findAll({
-  //     include: {
-  //       model: User,
-  //       attributes: ["id", "nick"],
-  //     },
-  //   });
-  //   totalSize = posts.length;
-  // } catch (err) {
-  //   console.error(err);
-  //   next(err);
-  // }
-
-  try {
-    const { count } = await Post.findAndCountAll({});
-    totalSize = count;
-  } catch (err) {
-    console.error(err);
-  }
-
-  let offset = (currentPage - 1) * pageSize;
 
   try {
     const posts = await Post.findAll({
@@ -46,8 +20,43 @@ exports.renderMain = async (req, res, next) => {
         model: User,
         attributes: ["id", "nick"],
       },
+    });
+    totalSize = posts.length;
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+
+  // try {
+  //   const { count } = await Post.findAndCountAll({});
+  //   totalSize = count;
+  // } catch (err) {
+  //   console.error(err);
+  // }
+
+  let pageSize = 5;
+
+  // http://localhost:8001/?currentPage=1의 역할
+  let currentPage = 0;
+  if (req.query.currentPage) currentPage = Number(req.query.currentPage);
+  if (currentPage == 0) currentPage = 1;
+  console.log("currentPage", currentPage);
+
+  let offset = (currentPage - 1) * pageSize;
+  console.log("offset: ", offset);
+  let pageOffset = Math.floor((currentPage - 1) / 10) * 10 + 1;
+  console.log("pageOffset", pageOffset);
+  console.log("totalSize: ", totalSize);
+  let maxPage = Math.floor(totalSize / pageSize) + 1;
+  console.log("maxPage: ", maxPage);
+  try {
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ["id", "nick"],
+      },
       // 해당 부분에 offset, limit 추가
-      offest: Number(offset) || 0,
+      offset: Number(offset) || 0,
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
@@ -58,6 +67,8 @@ exports.renderMain = async (req, res, next) => {
       totalSize: totalSize,
       currentPage: currentPage,
       pageSize: pageSize,
+      pageOffset: pageOffset,
+      maxPage: maxPage,
     });
   } catch (err) {
     console.error(err);
