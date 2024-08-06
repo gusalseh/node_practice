@@ -10,7 +10,9 @@ exports.renderJoin = (req, res) => {
 
 exports.renderMain = async (req, res, next) => {
   // pagination 구현부
-  let pageSize = 10;
+  let pageSize = 5;
+
+  // http://localhost:8001/?currentPage=1의 역할
   let currentPage = req.params.currentPage; // 추후 프론트단에서 구체화
 
   // 데이터베이스 쿼리해서 계산 필요
@@ -39,7 +41,7 @@ exports.renderMain = async (req, res, next) => {
       },
       // 해당 부분에 offset, limit 추가
       offest: Number(offset) || 0,
-      limit: 10,
+      limit: 5,
       order: [["createdAt", "DESC"]],
     });
     res.render("main", {
@@ -47,6 +49,8 @@ exports.renderMain = async (req, res, next) => {
       twits: posts,
       // 프론트로 넘겨줘야할 부분
       totalSize: totalSize,
+      currentPage: currentPage,
+      pageSize: pageSize,
     });
   } catch (err) {
     console.error(err);
