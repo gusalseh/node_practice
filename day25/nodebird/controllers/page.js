@@ -18,17 +18,24 @@ exports.renderMain = async (req, res, next) => {
   // 데이터베이스 쿼리해서 계산 필요
   let totalSize = 0;
 
+  // try {
+  //   const posts = await Post.findAll({
+  //     include: {
+  //       model: User,
+  //       attributes: ["id", "nick"],
+  //     },
+  //   });
+  //   totalSize = posts.length;
+  // } catch (err) {
+  //   console.error(err);
+  //   next(err);
+  // }
+
   try {
-    const posts = await Post.findAll({
-      include: {
-        model: User,
-        attributes: ["id", "nick"],
-      },
-    });
-    totalSize = posts.length;
+    const { count } = await Post.findAndCountAll({});
+    totalSize = count;
   } catch (err) {
     console.error(err);
-    next(err);
   }
 
   let offset = (currentPage - 1) * pageSize;
