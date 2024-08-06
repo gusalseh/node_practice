@@ -64,16 +64,13 @@
     {% if (pageOffset//10) == (maxPage//10)  %}
     <!-- prettier-ignore -->
     {% for size in range(pageOffset, maxPage+1) %}
-    <span>{{size}}</span>&nbsp;&nbsp;
+    <a href="/?currentPage={{size}}"> <span>{{size}}</span> </a>&nbsp;&nbsp;
     <!-- prettier-ignore -->
     {% endfor %}
-    <!-- prettier-ignore -->
-    {% endif %}
-
-    <!-- prettier-ignore -->
-    {% if (pageOffset//10) != (maxPage//10)  %}
+    {% else %}
     {% for size in range(pageOffset, pageOffset+10) %}
-    <span>{{size}}</span>&nbsp;&nbsp;
+    <a href="/?currentPage={{size}}"> <span>{{size}}</span></a
+    >&nbsp;&nbsp;
     <!-- prettier-ignore -->
     {% endfor %}
     <!-- prettier-ignore -->
